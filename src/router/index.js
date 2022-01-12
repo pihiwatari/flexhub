@@ -4,7 +4,7 @@ import Quote from "../views/Quote.vue";
 const routes = [
   {
     path: "/",
-    name: "Instant Quoting Page",
+    name: "Quote",
     component: Quote,
   },
   {
