@@ -39,7 +39,7 @@ export default {
         },
         {
           name: "Competency Centers",
-          address: "About",
+          address: "Maps",
         },
         {
           name: "Break Even Tool",
@@ -80,7 +80,7 @@ export default {
       list-style: none;
 
       a {
-        padding: 5px 10px;
+        padding: 10px;
         border-radius: 5px;
         transition: all 0.25s;
         // This is for the active vue router link styling

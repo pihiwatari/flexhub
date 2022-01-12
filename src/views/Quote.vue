@@ -6,7 +6,11 @@
     </p>
     <h2>Need help?</h2>
     <p>Checkout our help resources</p>
-    <a>Open User Guide</a>
+    <a
+      href="https://flextronics365.sharepoint.com/sites/additivemanufacturing/AM%20Instant%20Quoting%20Tool%20Page/Digifabster%20guide.pdf"
+    >
+      Open User Guide
+    </a>
   </div>
   <Digifabster />
 </template>

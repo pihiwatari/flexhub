@@ -29,12 +29,12 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgba(229, 231, 235, 1);
+  min-height: 100vh;
 }
 
 a {
   display: inline-block;
   text-decoration: none;
-  cursor: pointer;
   color: #1f2937;
 }
 </style>
