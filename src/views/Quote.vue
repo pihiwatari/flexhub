@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <h1>Instant Quoting Tool</h1>
     <p>
       Request new 3D printing serivices from the Additive Manufacturing Network
@@ -26,7 +26,7 @@ export default {
 </script>
 
 <style scoped lang="scss">
-div {
+.container {
   margin: 20px auto;
   text-align: center;
 

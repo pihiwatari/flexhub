@@ -123,8 +123,8 @@ export default {
 
 <style scoped lang="scss">
 .map {
-  max-width: 80%;
-  height: 300px;
+  width: 80%;
+  height: 450px;
   margin: auto;
 }
 </style>
