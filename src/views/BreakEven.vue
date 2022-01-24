@@ -13,12 +13,12 @@
 </template>
 
 <script>
-import ChartForm from "@/components/ChartForm.vue"
+import ChartForm from "@/components/ChartForm.vue";
 import Charts from "@/components/Charts.vue";
 export default {
   components: {
     Charts,
-    ChartForm
+    ChartForm,
   },
 };
 </script>

@@ -5,7 +5,9 @@
 <script>
 import Chart from "chart.js/auto";
 export default {
-  data() {},
+  data() {
+    return {};
+  },
   mounted() {
     const ctx = document.getElementById("canvas").getContext("2d");
     const chart = () => {
@@ -26,6 +28,4 @@ export default {
 };
 </script>
 
-<style scoped lang="scss">
-
-</style>
+<style scoped lang="scss"></style>

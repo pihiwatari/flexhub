@@ -25,7 +25,7 @@ const routes = [
     name: "BreakEven",
     component: BreakEven,
     meta: {
-      title: "About",
+      title: "Breakeven calculator",
     },
   },
 ];
