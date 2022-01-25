@@ -5,6 +5,7 @@
 <script>
 import Chart from "chart.js/auto";
 export default {
+  props: ["chartData"],
   data() {
     return {};
   },

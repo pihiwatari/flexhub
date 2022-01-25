@@ -13,6 +13,7 @@
       :step="stepValue"
       :name="rangeName"
       v-model="sliderValue"
+      @change="sendValue({ rangeName, sliderValue})"
     />
     <span> {{ isCurrency ? currencyValue : numberValue }} </span>
   </div>
@@ -32,11 +33,26 @@ export default {
       required: false,
     },
   },
+  emits: {
+    rangeInput: null,
+  },
   data() {
     return {
       sliderValue: this.value,
       sliderName: this.rangeName,
     };
+  },
+  methods: {
+    sendValue(data) {
+      this.$emit("rangeInput", data);
+    },
+    // changeSliderColor() {
+    //   const slider = document.querySelector(".range-slider");
+    //   slider.oninput = function () {
+    //     let value = ((this.min - this.value) / (this.max - this.min)) * -100;
+    //     slider.style.background = `linear-gradient(to right, #3b82f6 ${value}%, #fff ${value}%, white 100%)`;
+    //   };
+    // },
   },
   computed: {
     currencyValue() {
@@ -70,13 +86,12 @@ div {
 
   .range-slider {
     grid-column-end: span 2;
-    -webkit-appearance: none; /* Override default CSS styles */
-    appearance: none;
+    // -webkit-appearance: none; /* Override default CSS styles */
+    // appearance: none;
     width: 100%;
     height: 8px;
     border-radius: 10px;
     border: 1px solid #acacac;
-    background-color: #f5f5f5;
     opacity: 0.7;
     -webkit-transition: 0.5s;
     transition: opacity 0.5s;
