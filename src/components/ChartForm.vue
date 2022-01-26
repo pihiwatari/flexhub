@@ -1,47 +1,17 @@
 <template>
   <div class="form-container">
-    <RangeSlider
-      :min-value="1500"
-      :max-value="15000"
-      :value="3500"
-      :step-value="500"
-      range-name="Tooling cost"
-      @range-input="updateRangeValue"
-    />
-    <RangeSlider
-      :min-value="0.1"
-      :max-value="30"
-      :value="0.65"
-      :step-value="0.05"
-      range-name="Injection molding part cost"
-      @range-input="updateRangeValue"
-    />
-    <RangeSlider
-      :min-value="0.1"
-      :max-value="100"
-      :value="15"
-      :step-value="0.1"
-      range-name="3D printed part cost"
-      @range-input="updateRangeValue"
-    />
-    <RangeSlider
-      :min-value="1000"
-      :max-value="100000"
-      :value="25000"
-      :step-value="500"
-      :isCurrency="false"
-      range-name="Injection molded parts per month"
-      @range-input="updateRangeValue"
-    />
-    <RangeSlider
-      :min-value="1"
-      :max-value="36"
-      :value="12"
-      :step-value="1"
-      :isCurrency="false"
-      range-name="Injection molding running time (months)"
-      @range-input="updateRangeValue"
-    />
+    <ul v-for="slider in rangeSlidersData" :key="slider.id">
+      <RangeSlider
+        :id="slider.id"
+        :min-value="slider.minValue"
+        :max-value="slider.maxValue"
+        :value="slider.value"
+        :step-value="slider.stepValue"
+        :range-name="slider.rangeName"
+        :is-currency="slider.isCurrency"
+        @range-input="updateRangeValue"
+      />
+    </ul>
   </div>
 </template>
 
@@ -54,25 +24,70 @@ export default {
   emits: ["chartDataChange"],
   data() {
     return {
+      rangeSlidersData: [
+        {
+          id: 1,
+          minValue: 1500,
+          maxValue: 15000,
+          value: 3500,
+          stepValue: 500,
+          isCurrency: true,
+          rangeName: "Tooling cost",
+        },
+        {
+          id: 2,
+          minValue: 0.1,
+          maxValue: 30,
+          value: 0.65,
+          stepValue: 0.05,
+          isCurrency: true,
+          rangeName: "Injection molding part cost",
+        },
+        {
+          id: 3,
+          minValue: 0.1,
+          maxValue: 100,
+          value: 15,
+          stepValue: 0.1,
+          isCurrency: true,
+          rangeName: "3D printed part cost",
+        },
+        {
+          id: 4,
+          minValue: 1000,
+          maxValue: 100000,
+          value: 10000,
+          stepValue: 500,
+          isCurrency: false,
+          rangeName: "Injected parts per month",
+        },
+        {
+          id: 5,
+          minValue: 1,
+          maxValue: 36,
+          value: 12,
+          stepValue: 1,
+          isCurrency: false,
+          rangeName: "Injection molding run duration (months)",
+        },
+      ],
       rangeSlidersValues: [],
     };
   },
   methods: {
     updateRangeValue(data) {
-      const { rangeName, sliderValue } = data;
 
-      //find object index in array
+      // Get object from  array
       const index = this.rangeSlidersValues.findIndex(
-        (obj) => obj.rangeName == rangeName
+        (item) => item.rangeId === data.rangeId
       );
 
-      //replace value in object
-
-      if (index !== -1) {
-        this.rangeSlidersValues[index].sliderValue = sliderValue;
-      } else {
-        //if object doesn't exists, then push new object.
+      // If the object doesn't exist within the array we push the data objects
+      // but, if it exists then we just replace old value with new value
+      if (index === -1) {
         this.rangeSlidersValues.push(data);
+      } else {
+        this.rangeSlidersValues[index].rangeValue = data.rangeValue;
       }
 
       //emit information to BreakEven component

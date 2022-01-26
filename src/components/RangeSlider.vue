@@ -4,7 +4,7 @@
   for the break-even calculator display using chart.js.
 -->
   <div>
-    <label :for="rangeName"> {{ sliderName }} </label>
+    <label :for="rangeName"> {{ rangeName }} </label>
     <input
       class="range-slider"
       type="range"
@@ -13,7 +13,7 @@
       :step="stepValue"
       :name="rangeName"
       v-model="sliderValue"
-      @change="sendValue({ rangeName, sliderValue})"
+      @change="sendValue"
     />
     <span> {{ isCurrency ? currencyValue : numberValue }} </span>
   </div>
@@ -22,6 +22,7 @@
 <script>
 export default {
   props: {
+    id: Number,
     minValue: Number,
     maxValue: Number,
     value: Number,
@@ -33,17 +34,19 @@ export default {
       required: false,
     },
   },
-  emits: {
-    rangeInput: null,
-  },
+  emits: ["rangeInput"],
   data() {
     return {
       sliderValue: this.value,
-      sliderName: this.rangeName,
     };
   },
   methods: {
-    sendValue(data) {
+    sendValue() {
+      const data = new Object();
+      data.rangeId = this.id;
+      data.rangeName = this.rangeName;
+      data.rangeValue = this.sliderValue;
+
       this.$emit("rangeInput", data);
     },
     // changeSliderColor() {
