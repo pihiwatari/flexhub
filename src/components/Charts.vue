@@ -6,67 +6,149 @@
 import Chart from "chart.js/auto";
 export default {
   props: ["chartData"],
-  data() {
-    return {
-      initialChartOptions: {
-        type: "bar",
-        data: {
-          datasets: [
-            {
-              label: "Sample dataset",
-              data: [20, 10],
-            },
-          ],
-          labels: ["a", "b"],
-        },
-      },
-    };
-  },
   methods: {
     createInitialChart(ctx, options) {
       new Chart(ctx, options);
     },
+    // Get data from range slider inputs
     getData(id) {
+      const index = this.chartData.findIndex((item) => item["rangeId"] === id);
       // Return an empty object if the prop is empty to avoid errors.
-      if (!this.chartData) {
+      if (index === -1) {
         return {};
       }
 
       // get object using rangeName key identifier
-      const data = this.chartData.find((object) => object["rangeId"] == id);
+      const data = this.chartData[index];
       return data;
     },
 
-    // Create a period of time for injection molding process
-    createTimePeriod(time) {
-      let timePeriod = [];
-      for (let i = 0; i < time; i++) {
-        timePeriod.push(i);
+    createArray(numberOfItems) {
+      let array = [];
+      for (let i = 1; i <= numberOfItems; i++) {
+        array.push(i);
       }
-      return timePeriod;
+      return array;
+    },
+
+    createPartsArray(time, parts) {
+      let partsArray = [];
+      for (let i = 1; i <= time; i++) {
+        partsArray.push(i * parts);
+      }
+      return partsArray;
+    },
+
+    getInjectionCostPerPart(
+      toolingCost,
+      totalInjectedParts,
+      costPerInjectedPart
+    ) {
+      if (totalInjectedParts == 0) {
+        return toolingCost;
+      }
+      return (
+        (totalInjectedParts * costPerInjectedPart + toolingCost) /
+        totalInjectedParts
+      );
+    },
+
+    calculateBreakEvenPoint(
+      toolingCost,
+      costPerInjectedPart,
+      injectedPartsPerMonth,
+      totalMonths,
+      printedPartCost
+    ) {
+      return parseInt(
+        Math.ceil(
+          (toolingCost +
+            costPerInjectedPart * injectedPartsPerMonth * totalMonths) /
+            printedPartCost
+        )
+      );
     },
   },
   computed: {
-    // chartData comes from ChartForm.vue
-    tooling() {
-      return this.getData(1);
+    // Chart options
+    // generalChartOptions() {
+    //   const options = {
+    //     type: "line",
+    //     data: {
+    //       labels: 
+    //     }
+    //   }
+    //   return options;
+    // },
+    printedPartsChartOptions() {
+      return {
+        type: "line",
+        label: "3D printed part cost",
+        data: this.printedPartsCostArray,
+        borderColor: "rgba(255, 159, 64, 1)",
+        backgroundColor: "rgba(255, 159, 64, 1)",
+        pointRadius: 0,
+        hitRadius: 0,
+      };
     },
-    injectionPartsCost() {
-      return this.getData(2);
+    // chartData obtained from ../views/BreakEven.vue
+    toolingCost() {
+      return parseInt(this.getData(1).rangeValue) || 3500;
     },
-    printedPartsCost() {
-      return this.getData(3);
+    injectionMoldingPartCost() {
+      return parseFloat(this.getData(2).rangeValue) || 0.65;
     },
-    partsPerMonth() {
-      return this.getData(4);
+    printedPartCost() {
+      return parseFloat(this.getData(3).rangeValue) || 15;
     },
-    runningMonths() {
-      return this.getData(5);
+    injectedPartsPerMonth() {
+      return parseInt(this.getData(4).rangeValue) || 10000;
+    },
+    totalMonths() {
+      return parseInt(this.getData(5).rangeValue) || 12;
+    },
+    breakEvenPoint() {
+      return parseInt(
+        this.calculateBreakEvenPoint(
+          this.toolingCost,
+          this.injectionMoldingPartCost,
+          this.injectedPartsPerMonth,
+          this.totalMonths,
+          this.printedPartCost
+        )
+      );
+    },
+    // Array computed properties
+    injectionPartsArray() {
+      return this.createPartsArray(
+        this.totalMonths,
+        this.injectedPartsPerMonth
+      );
+    },
+    injectionPartsCostArray() {
+      return this.injectionPartsArray.map((partsPerMonth) =>
+        this.getInjectionCostPerPart(
+          this.toolingCost,
+          partsPerMonth,
+          this.injectionMoldingPartCost
+        )
+      );
+    },
+    monthsArray() {
+      return this.createArray(this.totalMonths);
+    },
+    printedPartsCostArray() {
+      const array = this.createArray(this.totalMonths);
+      const costArray = array.map((item) => {
+        item = this.printedPartCost;
+        return item;
+      });
+      return costArray;
     },
   },
   mounted() {
     const ctx = document.getElementById("canvas").getContext("2d");
-    this.createInitialChart(ctx, this.initialChartOptions);
+    this.createInitialChart(ctx, this.generalChartOptions);
   },
 };
 </script>
