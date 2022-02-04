@@ -68,6 +68,9 @@ export default {
       return new Intl.NumberFormat("en-EN").format(this.sliderValue);
     },
   },
+  created() {
+    this.sendValue();
+  }
 };
 </script>
 

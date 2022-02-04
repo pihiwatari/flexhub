@@ -27,10 +27,10 @@ export default {
       rangeSlidersData: [
         {
           id: 1,
-          minValue: 1500,
-          maxValue: 15000,
-          value: 3500,
-          stepValue: 500,
+          minValue: 5000,
+          maxValue: 150000,
+          value: 50000,
+          stepValue: 1000,
           isCurrency: true,
           rangeName: "Tooling cost",
         },

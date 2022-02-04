@@ -1,4 +1,5 @@
 <template>
+  <p>{{ chartData }}</p>
   <canvas id="canvas"></canvas>
 </template>
 
@@ -6,9 +7,26 @@
 import Chart from "chart.js/auto";
 export default {
   props: ["chartData"],
+  data() {
+    return {
+      chart: "",
+    };
+  },
   methods: {
-    createInitialChart(ctx, options) {
-      new Chart(ctx, options);
+    // Chart methods
+    createChart(ctx, options) {
+      return new Chart(ctx, options);
+    },
+    updateChart(chart) {
+      // Update chart parts labels
+      chart.config.data.labels = this.injectionPartsArray;
+      chart.config.data.datasets = [
+        this.breakevenDataset,
+        this.printingDataSet,
+        this.injectionDataset,
+      ];
+      chart.options.scales.x.title.text = `Injected parts over a period of ${this.totalMonths} months`;
+      chart.update();
     },
     // Get data from range slider inputs
     getData(id) {
@@ -52,7 +70,6 @@ export default {
         totalInjectedParts
       );
     },
-
     calculateBreakEvenPoint(
       toolingCost,
       costPerInjectedPart,
@@ -71,19 +88,48 @@ export default {
   },
   computed: {
     // Chart options
-    // generalChartOptions() {
-    //   const options = {
-    //     type: "line",
-    //     data: {
-    //       labels: 
-    //     }
-    //   }
-    //   return options;
-    // },
-    printedPartsChartOptions() {
+    topLevelChartOptions() {
+      return {
+        type: "scatter",
+        data: {
+          labels: this.injectionPartsArray,
+          datasets: [
+            this.breakevenDataset,
+            this.printingDataSet,
+            this.injectionDataset,
+          ],
+        },
+        options: {
+          scales: {
+            x: {
+              title: {
+                type: "linear",
+                display: true,
+                text: `Injected parts over a period of ${this.totalMonths} months`,
+              },
+              bounds: "data",
+            },
+            y: {
+              type: "linear",
+              title: {
+                display: true,
+                text: "Cost in US Dollars",
+              },
+            },
+          },
+        },
+        plugins: {
+          title: {
+            display: true,
+            text: "Injection Molding vs 3D printing part cost comparison",
+          },
+        },
+      };
+    },
+    printingDataSet() {
       return {
         type: "line",
-        label: "3D printed part cost",
+        label: "3D printing parts cost",
         data: this.printedPartsCostArray,
         borderColor: "rgba(255, 159, 64, 1)",
         backgroundColor: "rgba(255, 159, 64, 1)",
@@ -91,21 +137,40 @@ export default {
         hitRadius: 0,
       };
     },
+    injectionDataset() {
+      return {
+        type: "line",
+        label: "Injection parts per month",
+        data: this.injectionPartsCostArray,
+        borderColor: "rgba(59,130,246,1)",
+        backgroundColor: "rgba(59,130,246,.2)",
+        fill: true,
+      };
+    },
+    breakevenDataset() {
+      return {
+        type: "scatter",
+        label: "Breakeven Point",
+        data: [{ x: this.breakEvenPoint, y: this.printedPartCost }],
+        borderColor: "rgba(255, 50, 64, 1)",
+        backgroundColor: "rgba(255, 50, 64, 1)",
+      };
+    },
     // chartData obtained from ../views/BreakEven.vue
     toolingCost() {
-      return parseInt(this.getData(1).rangeValue) || 3500;
+      return parseInt(this.getData(1).rangeValue);
     },
     injectionMoldingPartCost() {
-      return parseFloat(this.getData(2).rangeValue) || 0.65;
+      return parseFloat(this.getData(2).rangeValue);
     },
     printedPartCost() {
-      return parseFloat(this.getData(3).rangeValue) || 15;
+      return parseFloat(this.getData(3).rangeValue);
     },
     injectedPartsPerMonth() {
-      return parseInt(this.getData(4).rangeValue) || 10000;
+      return parseInt(this.getData(4).rangeValue);
     },
     totalMonths() {
-      return parseInt(this.getData(5).rangeValue) || 12;
+      return parseInt(this.getData(5).rangeValue);
     },
     breakEvenPoint() {
       return parseInt(
@@ -147,8 +212,19 @@ export default {
     },
   },
   mounted() {
+    const config = this.topLevelChartOptions;
     const ctx = document.getElementById("canvas").getContext("2d");
-    this.createInitialChart(ctx, this.generalChartOptions);
+    const chart = this.createChart(ctx, config);
+
+
+    // watch for individual changes for every slider and update the chart.
+    this.chartData.forEach((prop, index) => {
+      this.$watch(
+        ["chartData", index].join("."),
+        () => this.updateChart(chart),
+        { deep: true }
+      );
+    });
   },
 };
 </script>
