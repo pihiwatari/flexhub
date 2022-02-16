@@ -16,13 +16,13 @@
 </template>
 
 <script>
-import Digifabster from "@/components/Digifabster.vue";
+import Digifabster from '@/components/Digifabster.vue'
 
 export default {
   components: {
-    Digifabster,
-  },
-};
+    Digifabster
+  }
+}
 </script>
 
 <style scoped lang="scss">

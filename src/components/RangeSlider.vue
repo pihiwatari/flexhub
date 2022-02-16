@@ -15,7 +15,22 @@
       v-model="sliderValue"
       @change="sendValue"
     />
-    <span> {{ isCurrency ? currencyValue : numberValue }} </span>
+    <span v-show="showSpan" @click="switchInput">
+      {{ isCurrency ? currencyValue : numberValue }}</span>
+    <!-- Test section: link input with range slider -->
+    <input
+      class="number-input"
+      type="number"
+      :min="minValue"
+      :max="maxValue"
+      :step="stepValue"
+      v-show="showInput"
+      v-model="sliderValue"
+      @change="switchInput(); sendValue()"
+      @mouseout="switchInput"
+      @focusout="switchInput"
+    />
+    <!-- Test section: link input with range slider -->
   </div>
 </template>
 
@@ -31,24 +46,40 @@ export default {
     isCurrency: {
       type: Boolean,
       default: true,
-      required: false,
-    },
+      required: false
+    }
   },
-  emits: ["rangeInput"],
+  emits: ['rangeInput'],
   data() {
     return {
       sliderValue: this.value,
-    };
+      showSpan: true,
+      showInput: false
+    }
   },
   methods: {
-    sendValue() {
-      const data = new Object();
-      data.rangeId = this.id;
-      data.rangeName = this.rangeName;
-      data.rangeValue = this.sliderValue;
-
-      this.$emit("rangeInput", data);
+    switchInput() {
+      this.showSpan = !this.showSpan
+      this.showInput = !this.showInput
     },
+    sendValue() {
+      // If the value from the input is smaller than min or greater than max,
+      // we set it to the min or max value.
+
+      if (this.sliderValue < this.minValue) {
+        this.sliderValue = this.minValue
+      }
+      if (this.sliderValue > this.maxValue) {
+        this.sliderValue = this.maxValue
+      }
+
+      const data = new Object()
+      data.rangeId = this.id
+      data.rangeName = this.rangeName
+      data.rangeValue = this.sliderValue
+
+      this.$emit('rangeInput', data)
+    }
     // changeSliderColor() {
     //   const slider = document.querySelector(".range-slider");
     //   slider.oninput = function () {
@@ -59,19 +90,19 @@ export default {
   },
   computed: {
     currencyValue() {
-      return new Intl.NumberFormat("en-EN", {
-        style: "currency",
-        currency: "USD",
-      }).format(this.sliderValue);
+      return new Intl.NumberFormat('en-EN', {
+        style: 'currency',
+        currency: 'USD'
+      }).format(this.sliderValue)
     },
     numberValue() {
-      return new Intl.NumberFormat("en-EN").format(this.sliderValue);
-    },
+      return new Intl.NumberFormat('en-EN').format(this.sliderValue)
+    }
   },
   created() {
-    this.sendValue();
+    this.sendValue()
   }
-};
+}
 </script>
 
 <style scoped lang="scss">
@@ -110,6 +141,16 @@ div {
     &::-webkit-slider-thumb {
       background-color: #3b82f6;
     }
+  }
+
+  .number-input {
+    width: auto;
+    margin-left: 10px;
+    padding: 4px;
+    outline: none;
+    border: none;
+    border-radius: 4px;
+    background-color: rgba(0, 0, 0, 0.05);
   }
 
   span {

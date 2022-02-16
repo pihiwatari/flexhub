@@ -16,12 +16,12 @@
 </template>
 
 <script>
-import RangeSlider from "@/components/RangeSlider.vue";
+import RangeSlider from '@/components/RangeSlider.vue'
 export default {
   components: {
-    RangeSlider,
+    RangeSlider
   },
-  emits: ["chartDataChange"],
+  emits: ['chartDataChange'],
   data() {
     return {
       rangeSlidersData: [
@@ -32,7 +32,7 @@ export default {
           value: 50000,
           stepValue: 1000,
           isCurrency: true,
-          rangeName: "Tooling cost",
+          rangeName: 'Tooling cost'
         },
         {
           id: 2,
@@ -41,16 +41,16 @@ export default {
           value: 0.65,
           stepValue: 0.05,
           isCurrency: true,
-          rangeName: "Injection molding part cost",
+          rangeName: 'Injection molding part cost'
         },
         {
           id: 3,
           minValue: 0.1,
           maxValue: 100,
-          value: 15,
+          value: 1.8,
           stepValue: 0.1,
           isCurrency: true,
-          rangeName: "3D printed part cost",
+          rangeName: '3D printed part cost'
         },
         {
           id: 4,
@@ -59,7 +59,7 @@ export default {
           value: 10000,
           stepValue: 500,
           isCurrency: false,
-          rangeName: "Injected parts per month",
+          rangeName: 'Injected parts per month'
         },
         {
           id: 5,
@@ -68,33 +68,32 @@ export default {
           value: 12,
           stepValue: 1,
           isCurrency: false,
-          rangeName: "Injection molding run duration (months)",
-        },
+          rangeName: 'Injection molding run duration (months)'
+        }
       ],
-      rangeSlidersValues: [],
-    };
+      rangeSlidersValues: []
+    }
   },
   methods: {
     updateRangeValue(data) {
-
       // Get object from  array
       const index = this.rangeSlidersValues.findIndex(
         (item) => item.rangeId === data.rangeId
-      );
+      )
 
       // If the object doesn't exist within the array we push the data objects
       // but, if it exists then we just replace old value with new value
       if (index === -1) {
-        this.rangeSlidersValues.push(data);
+        this.rangeSlidersValues.push(data)
       } else {
-        this.rangeSlidersValues[index].rangeValue = data.rangeValue;
+        this.rangeSlidersValues[index].rangeValue = data.rangeValue
       }
 
       //emit information to BreakEven component
-      this.$emit("chartDataChange", this.rangeSlidersValues);
-    },
-  },
-};
+      this.$emit('chartDataChange', this.rangeSlidersValues)
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">

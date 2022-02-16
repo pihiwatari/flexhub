@@ -22,33 +22,33 @@ export default {
     return {
       externalLinks: [
         {
-          name: "Flex Additive Homepage",
+          name: 'Flex Additive Homepage',
           address:
-            "https://flextronics365.sharepoint.com/sites/additivemanufacturing",
+            'https://flextronics365.sharepoint.com/sites/additivemanufacturing'
         },
         {
-          name: "Digital Catalog",
+          name: 'Digital Catalog',
           address:
-            "https://apps.powerapps.com/play/daa6a785-3ff2-4779-8743-520fecd48ea4?tenantId=3f0e69e0-eb38-4eb2-b4ee-52919719d31e?l=en-us",
-        },
+            'https://apps.powerapps.com/play/daa6a785-3ff2-4779-8743-520fecd48ea4?tenantId=3f0e69e0-eb38-4eb2-b4ee-52919719d31e?l=en-us'
+        }
       ],
       routerLinks: [
         {
-          name: "Instant Quoting Tool",
-          address: "Quote",
+          name: 'Instant Quoting Tool',
+          address: 'Quote'
         },
         {
-          name: "Competency Centers",
-          address: "Maps",
+          name: 'Competency Centers',
+          address: 'Maps'
         },
         {
-          name: "Break Even Tool",
-          address: "BreakEven",
-        },
-      ],
-    };
-  },
-};
+          name: 'Breakeven Tool',
+          address: 'BreakEven'
+        }
+      ]
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">

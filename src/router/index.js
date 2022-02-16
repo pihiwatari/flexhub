@@ -1,43 +1,43 @@
-import { createRouter, createWebHashHistory } from "vue-router";
-import Quote from "../views/Quote.vue";
-import Maps from "../views/Maps.vue";
-import BreakEven from "../views/BreakEven.vue";
+import { createRouter, createWebHashHistory } from 'vue-router'
+import Quote from '../views/Quote.vue'
+import Maps from '../views/Maps.vue'
+import BreakEven from '../views/BreakEven.vue'
 
 const routes = [
   {
-    path: "/",
-    name: "Quote",
+    path: '/',
+    name: 'Quote',
     component: Quote,
     meta: {
-      title: "Instant Quoting Tool",
-    },
+      title: 'Instant Quoting Tool'
+    }
   },
   {
-    path: "/competency-centers",
-    name: "Maps",
+    path: '/competency-centers',
+    name: 'Maps',
     component: Maps,
     meta: {
-      title: "AM Competency Centers",
-    },
+      title: 'AM Competency Centers'
+    }
   },
   {
-    path: "/break-even",
-    name: "BreakEven",
+    path: '/break-even',
+    name: 'BreakEven',
     component: BreakEven,
     meta: {
-      title: "Breakeven calculator",
-    },
-  },
-];
+      title: 'Breakeven calculator'
+    }
+  }
+]
 
 const router = createRouter({
   history: createWebHashHistory(),
-  routes,
-});
+  routes
+})
 
 router.beforeEach((to, from, next) => {
-  document.title = `${to.meta.title}`;
-  next();
-});
+  document.title = `${to.meta.title}`
+  next()
+})
 
-export default router;
+export default router

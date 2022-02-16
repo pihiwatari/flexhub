@@ -9,12 +9,12 @@
 </template>
 
 <script>
-import LeafletMaps from "@/components/LeafletMaps.vue";
+import LeafletMaps from '@/components/LeafletMaps.vue'
 export default {
   components: {
-    LeafletMaps,
-  },
-};
+    LeafletMaps
+  }
+}
 </script>
 
 <style scoped lang="scss">

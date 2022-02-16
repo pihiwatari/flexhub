@@ -13,24 +13,24 @@
 </template>
 
 <script>
-import ChartForm from "@/components/ChartForm.vue";
-import Charts from "@/components/Charts.vue";
+import ChartForm from '@/components/ChartForm.vue'
+import Charts from '@/components/Charts.vue'
 export default {
   components: {
     Charts,
-    ChartForm,
+    ChartForm
   },
   data() {
     return {
-      newChartData: [],
+      newChartData: []
     }
   },
   methods: {
     updateData(data) {
-      this.newChartData = data;
-    },
-  },
-};
+      this.newChartData = data
+    }
+  }
+}
 </script>
 
 <style scoped lang="scss">

@@ -1,16 +1,19 @@
 <template>
   <Header />
-  <router-view />
+  <router-view style="max-width: 940px; margin: auto"></router-view>
+  <footer>
+    <small>Developed by Elias Rayas | AME</small>
+  </footer>
 </template>
 
 <script>
-import Header from "@/components/Header.vue";
+import Header from '@/components/Header.vue'
 
 export default {
   components: {
-    Header,
-  },
-};
+    Header
+  }
+}
 </script>
 
 <style lang="scss">
@@ -25,7 +28,7 @@ body {
 }
 
 #app {
-  font-family: "Century Gothic", Helvetica, Arial, sans-serif;
+  font-family: 'Century Gothic', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   background-color: rgba(229, 231, 235, 1);
@@ -36,5 +39,15 @@ a {
   display: inline-block;
   text-decoration: none;
   color: #1f2937;
+}
+
+footer {
+  height: 40px;
+  margin-top: 200px;
+  background-color: #1f2937;
+  color: #f0f0f0;
+  small {
+    margin: auto;
+  }
 }
 </style>
