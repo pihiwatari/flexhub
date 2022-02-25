@@ -47,6 +47,9 @@ footer {
   background-color: #1f2937;
   color: #f0f0f0;
   small {
+    display: block;
+    width: 100%;
+    text-align: center;
     margin: auto;
   }
 }

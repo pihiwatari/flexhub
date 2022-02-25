@@ -3,9 +3,11 @@
     <router-link :to="{ name: 'Quote' }">
       <img src="@/assets/logo.png" alt="Flex logo" />
     </router-link>
-    <ul>
+    <ul :class="{ 'open-menu': openMenu }">
       <li v-for="(link, i) in externalLinks" :key="i">
-        <a :href="link.address" target="_blank"> {{ link.name }} </a>
+        <a :href="link.address" target="_blank">
+          {{ link.name }}
+        </a>
       </li>
       <li v-for="(link, i) in routerLinks" :key="i">
         <router-link :to="{ name: link.address }">
@@ -13,6 +15,11 @@
         </router-link>
       </li>
     </ul>
+    <div class="hamburger-menu" @click="showMenu">
+      <div></div>
+      <div></div>
+      <div></div>
+    </div>
   </nav>
 </template>
 
@@ -45,8 +52,31 @@ export default {
           name: 'Breakeven Tool',
           address: 'BreakEven'
         }
-      ]
+      ],
+      openMenu: false,
+      width: document.documentElement.clientWidth
     }
+  },
+  methods: {
+    showMenu() {
+      this.openMenu = !this.openMenu
+    },
+    closeMenu() {
+      if (this.width > 800) {
+        this.openMenu = false
+      }
+    }
+  },
+  watch: {
+    $route() {
+      this.openMenu = false
+    }
+  },
+  mounted() {
+    window.addEventListener('resize', this.closeMenu)
+  },
+  unmounted() {
+    window.removeEventListener('resize', this.closeMenu)
   }
 }
 </script>
@@ -57,6 +87,7 @@ export default {
   align-items: center;
   padding: 10px 20px;
   height: 70px;
+  width: 100%;
 
   // Box shadow
   box-shadow: 0px 5px 5px 0px rgba(0, 0, 0, 0.14);
@@ -82,10 +113,13 @@ export default {
       a {
         padding: 10px;
         border-radius: 5px;
+        text-align: center;
+        font-size: 0.75rem;
         transition: all 0.25s;
         // This is for the active vue router link styling
         &.router-link-exact-active,
         &:hover {
+          font-weight: bold;
           color: #fff;
           background-color: rgb(59, 130, 246);
           transform: scale(1.05, 1.05) translateY(-3px);
@@ -94,4 +128,44 @@ export default {
     }
   }
 }
+
+@media screen and (max-width: 800px) {
+  .header {
+    justify-content: space-between;
+
+    ul {
+      display: none;
+    }
+
+    .open-menu {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      position: absolute;
+      z-index: 99;
+      top: 0;
+      bottom: 0;
+      right: 0;
+      left: 0;
+      background-color: #f0f0f0;
+    }
+
+    .hamburger-menu {
+      z-index: 999;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      width: 40px;
+      height: 40px;
+      div {
+        width: 100%;
+        height: 3px;
+        margin: auto;
+        background-color: #1f2937;
+      }
+    }
+  }
+}
+
 </style>
