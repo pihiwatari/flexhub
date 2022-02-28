@@ -35,8 +35,6 @@ export default {
 
 <style scoped lang="scss">
 .breakeven {
-  max-width: 80%;
-  margin: 0 auto;
   text-align: center;
 
   h1 {

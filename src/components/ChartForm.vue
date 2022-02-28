@@ -102,4 +102,20 @@ export default {
   grid-template-columns: repeat(3, minmax(200px, 1fr));
   margin: 20px auto;
 }
+
+@media screen and (max-width: 1023px){
+  .form-container {
+    grid-template-columns: repeat(2, 1fr);
+    place-items: center;
+    ul {
+      width: 100%;
+    }
+  }
+}
+
+@media screen and (max-width: 427px){
+  .form-container {
+    grid-template-columns: 1fr;
+  }
+}
 </style>

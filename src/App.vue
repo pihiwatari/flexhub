@@ -1,6 +1,6 @@
 <template>
   <Header />
-  <router-view style="max-width: 940px; margin: auto"></router-view>
+  <router-view class="router-view"></router-view>
   <footer>
     <small>Developed by Elias Rayas | AME</small>
   </footer>
@@ -27,23 +27,32 @@ body {
   background-color: #f0f0f0;
 }
 
-#app {
-  font-family: 'Century Gothic', Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  background-color: rgba(229, 231, 235, 1);
-  min-height: 100vh;
-}
-
 a {
   display: inline-block;
   text-decoration: none;
   color: #1f2937;
 }
 
+#app {
+  font-family: 'Century Gothic', Helvetica, Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  display: grid;
+  grid-template-rows: auto 1fr auto;
+  min-height: 100vh;
+  background-color: rgba(229, 231, 235, 1);
+  & > .router-view {
+    max-width: 940px;
+    margin: 0 auto 12px;
+    padding: 0 5%;
+  }
+}
+
 footer {
-  height: 40px;
-  margin-top: 200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 0;
   background-color: #1f2937;
   color: #f0f0f0;
   small {
@@ -51,6 +60,18 @@ footer {
     width: 100%;
     text-align: center;
     margin: auto;
+  }
+}
+
+@media screen and (max-width: 427px) {
+  h1 {
+    font-size: 24px;
+  }
+
+  #app {
+    & > div {
+      padding: 0 12px;
+    }
   }
 }
 </style>

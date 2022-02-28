@@ -11,8 +11,11 @@
   </div>
 </template>
 
-<style lang="scss">
-iframe {
+<style scoped lang="scss">
+div {
   width: 100%;
+  iframe {
+    width: 100%;
+  }
 }
 </style>

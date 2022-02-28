@@ -4,12 +4,12 @@
     <p>
       Request new 3D printing serivices from the Additive Manufacturing Network
     </p>
-    <h2>Need help?</h2>
-    <p>Checkout our help resources</p>
+    <h2>Do you need help?</h2>
+    <p>Check out our user's guide</p>
     <a
       href="https://flextronics365.sharepoint.com/sites/additivemanufacturing/AM%20Instant%20Quoting%20Tool%20Page/Digifabster%20guide.pdf"
     >
-      Open User Guide
+      Open user's guide
     </a>
   </div>
   <Digifabster />

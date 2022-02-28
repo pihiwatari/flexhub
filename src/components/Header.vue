@@ -15,7 +15,11 @@
         </router-link>
       </li>
     </ul>
-    <div class="hamburger-menu" @click="showMenu">
+    <div
+      class="hamburger-menu"
+      :class="{ 'open-burger': openMenu }"
+      @click="showMenu"
+    >
       <div></div>
       <div></div>
       <div></div>
@@ -54,7 +58,7 @@ export default {
         }
       ],
       openMenu: false,
-      width: document.documentElement.clientWidth
+      windowWidth: window.innerWidth
     }
   },
   methods: {
@@ -62,21 +66,28 @@ export default {
       this.openMenu = !this.openMenu
     },
     closeMenu() {
-      if (this.width > 800) {
-        this.openMenu = false
+      this.openMenu = false
+    },
+    onResize() {
+      this.windowWidth = window.innerWidth
+      if (this.windowWidth > 1023) {
+        this.closeMenu()
       }
     }
   },
   watch: {
     $route() {
       this.openMenu = false
+    },
+    windowWidth(newValue) {
+      this.windowWidth = newValue
     }
   },
   mounted() {
-    window.addEventListener('resize', this.closeMenu)
+    window.addEventListener('resize', this.onResize)
   },
   unmounted() {
-    window.removeEventListener('resize', this.closeMenu)
+    window.removeEventListener('resize', this.onResize)
   }
 }
 </script>
@@ -111,7 +122,7 @@ export default {
       list-style: none;
 
       a {
-        padding: 10px;
+        padding: 12px;
         border-radius: 5px;
         text-align: center;
         font-size: 0.75rem;
@@ -129,43 +140,94 @@ export default {
   }
 }
 
-@media screen and (max-width: 800px) {
+@media screen and (max-width: 1023px) {
   .header {
     justify-content: space-between;
 
     ul {
-      display: none;
-    }
-
-    .open-menu {
+      top: -100vh;
+      bottom: 100vh;
+      right: 0;
+      left: 0;
+      position: absolute;
+      z-index: 99;
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: center;
-      position: absolute;
-      z-index: 99;
+      background-color: #f0f0f0;
+      // Transitions
+      transition: all 0.6s ease-in-out;
+      opacity: 0;
+
+      li {
+        margin: 8px auto;
+
+        a {
+          font-size: 1.5rem;
+        }
+      }
+    }
+
+    .open-menu {
       top: 0;
       bottom: 0;
       right: 0;
       left: 0;
-      background-color: #f0f0f0;
+      // Transitions
+      transition: all 0.6s ease-in-out;
+      opacity: 1;
     }
 
     .hamburger-menu {
+      position: relative;
       z-index: 999;
-      display: flex;
-      flex-direction: column;
-      justify-content: space-between;
+      // display: flex;
+      // flex-direction: column;
+      // justify-content: space-around;
+      // align-items: center;
       width: 40px;
-      height: 40px;
+      height: 30px;
+      padding: 4px;
       div {
+        position: absolute;
         width: 100%;
-        height: 3px;
+        height: 5px;
         margin: auto;
+        border-radius: 5px;
         background-color: #1f2937;
+        transform: rotate(0deg);
+        transform: scale(1);
+        transition: all 0.25s ease-in-out;
+      }
+      & div:nth-child(1) {
+        top: 0;
+      }
+      & div:nth-child(2) {
+        top: 15px;
+      }
+      & div:nth-child(3) {
+        top: 30px;
+      }
+      // Menu animation
+      &.open-burger div:nth-child(1) {
+        top: 1px;
+        transform: rotate(45deg);
+        transform-origin: 0;
+        transition: all 0.25s ease-in-out;
+      }
+      &.open-burger div:nth-child(2) {
+        transform: scale(0, 1);
+        transition: all 0.25s ease-in-out;
+      }
+      &.open-burger div:nth-child(3) {
+        top: 29px;
+        transform: rotate(-45deg);
+        transform-origin: 0;
+        transition: all 0.25s ease-in-out;
       }
     }
   }
 }
-
 </style>

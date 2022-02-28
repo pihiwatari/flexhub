@@ -1,6 +1,7 @@
 <template>
-  <!-- <p>{{ chartData }}</p> -->
-  <canvas id="canvas"></canvas>
+  <div class="canvas-container">
+    <canvas id="canvas"></canvas>
+  </div>
 </template>
 
 <script>
@@ -244,7 +245,10 @@ export default {
 </script>
 
 <style scoped lang="scss">
-canvas {
-  margin-top: 20px;
+.canvas-container {
+  position: relative;
+  width: 90vw;
+  max-width: 100%;
+  margin: auto;
 }
 </style>

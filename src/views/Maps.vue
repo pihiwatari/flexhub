@@ -19,6 +19,7 @@ export default {
 
 <style scoped lang="scss">
 .main-container {
+  width: 100%;
   .text-container {
     margin-bottom: 20px;
     text-align: center;
