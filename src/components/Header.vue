@@ -165,7 +165,7 @@ export default {
         margin: 8px auto;
 
         a {
-          font-size: 1.5rem;
+          font-size: 1.2rem;
         }
       }
     }
@@ -188,7 +188,7 @@ export default {
       // justify-content: space-around;
       // align-items: center;
       width: 40px;
-      height: 30px;
+      height: 20px;
       padding: 4px;
       div {
         position: absolute;
@@ -205,10 +205,10 @@ export default {
         top: 0;
       }
       & div:nth-child(2) {
-        top: 15px;
+        top: 10px;
       }
       & div:nth-child(3) {
-        top: 30px;
+        top: 20px;
       }
       // Menu animation
       &.open-burger div:nth-child(1) {

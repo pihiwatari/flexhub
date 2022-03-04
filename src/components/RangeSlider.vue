@@ -156,6 +156,9 @@ div {
   span {
     justify-self: start;
     margin-left: 10px;
+    padding: 4px;
+    border-radius: 4px;
+    background-color: rgba(255, 255, 255, 0.6);
   }
 }
 </style>
