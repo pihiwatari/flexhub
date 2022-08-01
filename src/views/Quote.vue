@@ -6,11 +6,8 @@
     </p>
     <h2>Do you need help?</h2>
     <p>Check out our user's guide</p>
-    <a
-      href="https://flextronics365.sharepoint.com/sites/additivemanufacturing/AM%20Instant%20Quoting%20Tool%20Page/Digifabster%20guide.pdf"
-    >
-      Open user's guide
-    </a>
+    <!-- Removed presentation url -->
+    <a href="#">Open user's guide</a>
   </div>
   <Digifabster />
 </template>

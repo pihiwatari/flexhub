@@ -4,16 +4,20 @@
       <img src="@/assets/logo.png" alt="Flex logo" />
     </router-link>
     <ul :class="{ 'open-menu': openMenu }">
+      <!-- Disabled links -->
       <li v-for="(link, i) in externalLinks" :key="i">
-        <a :href="link.address" target="_blank">
+        <a role="link" aria-disabled="true">
           {{ link.name }}
         </a>
       </li>
+      <!-- Disabled links -->
+      <!-- Functional links -->
       <li v-for="(link, i) in routerLinks" :key="i">
         <router-link :to="{ name: link.address }">
           {{ link.name }}
         </router-link>
       </li>
+      <!-- Functional links -->
     </ul>
     <div
       class="hamburger-menu"
@@ -31,16 +35,15 @@
 export default {
   data() {
     return {
+      // These links are disabled due to auth requirement.
       externalLinks: [
         {
           name: 'Flex Additive Homepage',
-          address:
-            'https://flextronics365.sharepoint.com/sites/additivemanufacturing'
+          address: '#'
         },
         {
           name: 'Digital Catalog',
-          address:
-            'https://apps.powerapps.com/play/daa6a785-3ff2-4779-8743-520fecd48ea4?tenantId=3f0e69e0-eb38-4eb2-b4ee-52919719d31e?l=en-us'
+          address: '#'
         }
       ],
       routerLinks: [
